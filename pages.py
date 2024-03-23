@@ -97,10 +97,13 @@ def suburbs_page(loc1):
                     st.write(df)
                     
             else:
-                df=sub_scrap(href_sub,pages=None)
-                create_detail(table_name)
-                insert_detail_table(df,table_name)
-                st.write(df)
+                try:
+                    df=sub_scrap(href_sub,pages=None)
+                    create_detail(table_name)
+                    insert_detail_table(df,table_name)
+                    st.write(df)
+                except:
+                    st.info("Something went wrong, please try some different suburb")
         sfig, axs = plt.subplots(1, 2, figsize=(12, 6))
         status_counts = df['Status'].value_counts()
         axs[0].bar(status_counts.index, status_counts.values)
