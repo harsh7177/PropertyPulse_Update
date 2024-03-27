@@ -68,6 +68,7 @@ def suburbs_page(loc1):
     sns.set_palette("colorblind")
     lottie_cod=load_lot("anime/Animation.json")
     df_href=get_href_data(loc1+'_href')
+    df_href=df_href.dropna()
     suburb = st.selectbox("Select Suburbs/Area", ["None"]+df_href['Area'].to_list())
     
     if suburb in df_href['Area'].to_list() :
@@ -82,29 +83,32 @@ def suburbs_page(loc1):
                 rds_len=len(df)
                 
                 if (rds_len+20) < total_len:
+                    
                     start_page=int(rds_len/20) + 1
-                    try:
+                    try:  
                         df1=sub_scrap(href_sub,start_page)
                         insert_detail_table(df1,table_name)
-                        df=get_detail_data(loc1+"_"+suburb)
+                        df = get_detail_data(loc1 +"_"+ suburb)
                         st.write(df)
                     except:
-                        df=get_detail_data(loc1+"_"+suburb)
+                        df=get_detail_data(loc1 +"_"+ suburb)
                         st.write(df)    
                 else:
-                    st.info('Data Powered By AWS RDS')
+                    st.info('Data Powered By AWS RDS.')
                     df=get_detail_data(loc1+"_"+suburb)
                     st.write(df)
                     
             else:
                 try:
-                    df=sub_scrap(href_sub,pages=None)
-                    create_detail(table_name)
-                    insert_detail_table(df,table_name)
+                    df=sub_scrap(href_sub,pages='None')
+                    if len(df)>20:
+                        create_detail(table_name)
+                        insert_detail_table(df,table_name)
                     st.write(df)
-                except:
-                    st.info("Something went wrong, please try some different suburb")
-        if not df.empty:
+                    
+                except Exception as e:
+                    st.warning(e)
+        if len(df)>0:
             sfig, axs = plt.subplots(1, 2, figsize=(12, 6))
             status_counts = df['Status'].value_counts()
             axs[0].bar(status_counts.index, status_counts.values)
@@ -141,8 +145,11 @@ def suburbs_page(loc1):
             st.pyplot()
             st.caption(f"<b>This graph illustrates the average  prices categorized by BHK configuration and status. It provides insights into the pricing dynamics based on the number of bedrooms (BHK) and the property's current status (Ready to Move or Under Construction) within the {suburb} area.</b>", unsafe_allow_html=True)
             st.divider()
-            
-            avg_price_per_project_bhk = df.groupby(['project', 'BHK'])['Price_Sqft'].mean().reset_index()
+            try:
+                avg_price_per_project_bhk = df.groupby(['project', 'BHK'])['Price_Sqft'].mean().reset_index()
+            except:
+                df=df.rename(columns={'Price/Sqft'})
+                avg_price_per_project_bhk = df.groupby(['project', 'BHK'])['Price_Sqft'].mean().reset_index()
             avg_price_per_project_bhk = avg_price_per_project_bhk.sort_values(by='Price_Sqft', ascending=False)
             top_10_projects_bhk = avg_price_per_project_bhk.head(10)
             bottom_10_projects_bhk = avg_price_per_project_bhk.tail(10)
@@ -165,8 +172,8 @@ def suburbs_page(loc1):
             plt.xticks(rotation=45, ha='right')
             st.pyplot(fig)
             st.caption(f'Most Affordable Projects in {loc1.capitalize()} by Price/SqFt')
-    elif suburb=="None":
-        st.info('Select Suburb/Area of your city')
+        elif suburb=="None":
+            st.info('Select Suburb/Area of your city')
         
 def about_page():
     st.markdown("""
