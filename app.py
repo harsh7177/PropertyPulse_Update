@@ -83,8 +83,9 @@ def get_city_coordinates(city_name):
 
 if page=='City':
     loc1 = st.text_input("Enter your city:- ")
+    loc1=loc1.lower()
     if loc1:
-        coordinates = get_city_coordinates(loc1.lower())
+        coordinates = get_city_coordinates(loc1)
         if coordinates:
             latitude, longitude = coordinates
             print(f"The coordinates of {loc1} are: Latitude {latitude}, Longitude {longitude}")
@@ -99,6 +100,7 @@ if page=='City':
 
 if page=='Suburbs':
     loc1 = st.text_input("Enter your city:- ")
+    loc1=loc1.lower()
     suburbs_page(loc1)
 elif page=='About Application':
     about_page()
