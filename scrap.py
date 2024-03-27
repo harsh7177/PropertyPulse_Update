@@ -2,7 +2,7 @@ import requests
 import json
 import pandas as pd
 import streamlit as st
-@st.cache_data
+
 def scrap_city(loc1):
     endpoint_url = "https://stgpxl9ok3.execute-api.us-east-1.amazonaws.com/dev"
     post = {"loc": str(loc1),"href":"None"}
@@ -15,7 +15,6 @@ def scrap_city(loc1):
     df=df.dropna()
     return df
 
-@st.cache_data
 def sub_scrap(href,pages):
     endpoint_url = "https://stgpxl9ok3.execute-api.us-east-1.amazonaws.com/dev"
     post = {"loc": "None","href":href,"page":pages}
@@ -28,7 +27,7 @@ def sub_scrap(href,pages):
     except Exception as e:
         return e
     
-@st.cache_data
+
 def get_href_pages(href):
     endpoint_url = "https://stgpxl9ok3.execute-api.us-east-1.amazonaws.com/dev"
     post = {"loc": "None","href":href,"page":"True"}
