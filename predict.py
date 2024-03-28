@@ -68,7 +68,8 @@ def predict_page(suburb):
         else:
             price_in_lakh = round( prediction / 10000000,2)
             price=str(price_in_lakh)+" Lakh"
-        st.write(f"Predicted Value: {price}")
+        st.balloons()
+        st.title(f"Predicted Value: {price}")
         scaled_prediction = prediction / max_value  # Scale prediction to range [0.0, 1.0]
         progress_bar = st.progress(scaled_prediction)
 
