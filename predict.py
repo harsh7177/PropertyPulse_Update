@@ -48,8 +48,8 @@ def predict_house_price(df,input_values):
 
 def predict_page(suburb):
     st.write(suburb)
-    table_name=session_state.loc1.lower() + "_" + suburb.replace(' ','_').lower()
-    df=get_detail_data(table_name)
+    table_name = session_state.loc1.lower() + "_" + suburb.replace(' ','_').lower()
+    df = get_detail_data(table_name)
     bhk = st.number_input("BHK (Bedrooms, Hall, Kitchen)", min_value=1, step=1)
     size_sq_ft = st.number_input("Size (Sq. ft.)", min_value=1)
     bath = st.number_input("Number of Bathrooms", min_value=1, step=1)
@@ -65,12 +65,18 @@ def predict_page(suburb):
         st.write(f"Number of Bathrooms: {bath}")
         st.write(f"Ready to Move?: {'Yes' if ready_to_move else 'No'}")
         st.write(f"Under Construction?: {'Yes' if under_construction else 'No'}")
-        prediction,errors=predict_house_price(df,[bhk,size_sq_ft,bath,ready_to_move,under_construction])
-        predicted_value = prediction
-        plt.plot([], [])
-        plt.text(0, predicted_value, f'{predicted_value}', ha='center', va='bottom', color='red', fontsize=14, fontweight='bold')
-        plt.axis('off')
-        plt.show()
+        prediction, errors = predict_house_price(df, [bhk, size_sq_ft, bath, ready_to_move, under_construction])
+        
+        # Display predicted value
+        st.write(f"Predicted Value: {prediction}")
+
+        # Plot predicted value
+        plt.figure(figsize=(8, 6))
+        plt.plot([0], [prediction], marker='o', color='red', markersize=10)
+        plt.title('Predicted Value')
+        plt.xlabel('Time')
+        plt.ylabel('Price')
+        st.pyplot(plt)
 
    
     
