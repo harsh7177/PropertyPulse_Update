@@ -106,8 +106,12 @@ def get_city_coordinates(city_name):
 if page=='City':
     city_set = set([word.split('_')[0].capitalize() for word in href_tables()])
     city = list(city_set) 
-    loc1 = st.selectbox("Select your city:", ["None"]+ city)
-    session_state.loc1 = loc1
+    loc1_option = st.radio("Select your city or enter manually:", ["Select from list", "Enter manually"])
+    if loc1_option == "Select from list":
+        loc1 = st.selectbox("Select your city:", ["None"] + city)
+    else:
+        loc1 = st.text_input("Enter your city:")
+        session_state.loc1 = loc1
     if loc1=="None":
         pass
     else:
