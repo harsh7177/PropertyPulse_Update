@@ -65,9 +65,11 @@ def predict_page(suburb):
         st.write(f"Ready to Move?: {'Yes' if ready_to_move else 'No'}")
         st.write(f"Under Construction?: {'Yes' if under_construction else 'No'}")
         prediction,errors=predict_house_price(df,[bhk,size_sq_ft,bath,ready_to_move,under_construction])
-        st.write(prediction)
-        st.write(errors)
-  
+        predicted_value = prediction
+        plt.plot([], [])
+        plt.text(0, predicted_value, f'{predicted_value}', ha='center', va='bottom', color='red', fontsize=14, fontweight='bold')
+        plt.axis('off')
+        plt.show()
 
    
     
