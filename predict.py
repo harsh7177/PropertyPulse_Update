@@ -69,14 +69,7 @@ def predict_page(suburb):
         
         # Display predicted value
         st.write(f"Predicted Value: {prediction}")
-
-        # Plot predicted value
-        plt.figure(figsize=(8, 6))
-        plt.plot([0], [prediction], marker='o', color='red', markersize=10)
-        plt.title('Predicted Value')
-        plt.xlabel('Time')
-        plt.ylabel('Price')
-        st.pyplot(plt)
+        progress_bar = st.progress(prediction)
 
    
     
