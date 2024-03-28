@@ -132,7 +132,10 @@ if page=='City':
 if page=='Suburbs':
     city = ["Nagpur","Hyderabad","Gurgaon","Pune","Delhi","Chennai","Bangalore","Ahmedabad","Asansol","Mumbai","Jaipur","Kolkata"]
     loc1 = st.selectbox("Select your city:", ["None"]+ city)
-    suburbs_page(loc1)
+    if loc1=="None":
+        pass
+    elif len(loc1)>2:
+        suburbs_page(loc1)
 if page=="Predict":
     suburb=session_state.suburb
     predict_page(suburb)
