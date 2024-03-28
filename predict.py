@@ -57,6 +57,7 @@ def predict_page(suburb):
     under_construction = st.selectbox("Under Construction?", ["Yes", "No"])
     ready_to_move = 1 if ready_to_move == "Yes" else 0
     under_construction = 1 if under_construction == "Yes" else 0
+    max_value=df['Price'].max()
     if st.button("Predict"):
         # Perform prediction or any other action here
         st.success("Inputs submitted successfully!")
@@ -69,7 +70,8 @@ def predict_page(suburb):
         
         # Display predicted value
         st.write(f"Predicted Value: {prediction}")
-        progress_bar = st.progress(prediction)
+        scaled_prediction = prediction / max_value  # Scale prediction to range [0.0, 1.0]
+        progress_bar = st.progress(scaled_prediction)
 
    
     
