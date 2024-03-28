@@ -105,7 +105,7 @@ def get_city_coordinates(city_name):
 
 if page=='City':
     city = ["Nagpur","Hyderabad","Gurgaon","Pune","Delhi","Chennai","Bangalore","Ahmedabad","Asansol","Mumbai","Jaipur","Kolkata"]
-    loc1 = st.selectbox("Select your city:", ["None"]+ city)
+    loc1 = st.selectbox("Select your city:",  city)
     loc1=loc1.lower()
     if 'loc1' not in st.session_state:
         st.session_state.loc1 = None 
