@@ -99,7 +99,7 @@ if page=='City':
         city_page(loc1)
 
 if page=='Suburbs':
-    loc1
+    loc1= st.text_input("Enter your city:- ")
     loc1=loc1.lower()
     suburbs_page(loc1)
 elif page=='About Application':
