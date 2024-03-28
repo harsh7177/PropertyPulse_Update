@@ -2,6 +2,7 @@ from scrap import scrap_city,sub_scrap,get_href_pages
 import matplotlib.pyplot as plt
 import streamlit as st
 import json
+from streamlit import session_state
 from sql_href import create_href,href_tables,insert_href_table,get_href_data
 from sql_details import detail_tables,get_detail_data,insert_detail_table,create_detail
 from streamlit_lottie import st_lottie_spinner
@@ -15,7 +16,7 @@ def load_lot(filepath:str):
     
 
 def city_page(loc1):
-
+        
         if len(loc1)>0:
             try:
                 tables=href_tables()
@@ -70,6 +71,7 @@ def suburbs_page(loc1):
     df_href=get_href_data(loc1+'_href')
     df_href=df_href.dropna()
     suburb = st.selectbox("Select Suburbs/Area", ["None"]+df_href['Area'].to_list())
+    session_state.suburb=suburb
     
     if suburb in df_href['Area'].to_list() :
         st.info("Every Time User Search for a Suburb AWS LAMBDA check  new data and insert it into Database,it may take a little time.")
@@ -174,7 +176,7 @@ def suburbs_page(loc1):
             st.caption(f'Most Affordable Projects in {loc1.capitalize()} by Price/SqFt')
         elif suburb=="None":
             st.info('Select Suburb/Area of your city')
-        
+    
 def about_page():
     st.markdown("""
     <div style='text-align: center; padding: 20px;'>
