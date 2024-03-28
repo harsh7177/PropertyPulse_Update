@@ -9,7 +9,7 @@ def conn_detail():
         host=st.secrets['cities_details_host'],
         user="admin",
         password=st.secrets['cities_password'],
-        database=st.secrets['database']
+        database=st.secrets['cities_database']
     )
     
         cursor = conn.cursor()
