@@ -5,6 +5,7 @@ from streamlit import session_state
 from sql_details import get_detail_data
 from sklearn.ensemble import RandomForestRegressor,GradientBoostingRegressor
 from sklearn.metrics import mean_squared_error, r2_score
+import matplotlib.pyplot as plt
 def impute_bath(df):
     df['bath'] = pd.to_numeric(df['bath'], errors='coerce')
     mean_bathroom= df.groupby('BHK')['bath'].transform('mean').astype(int)
