@@ -107,6 +107,7 @@ if page=='City':
     city = ["Nagpur","Hyderabad","Gurgaon","Pune","Delhi","Chennai","Bangalore","Ahmedabad","Asansol","Mumbai","Jaipur","Kolkata"]
     loc1 = st.selectbox("Select your city:", ["None"]+ city)
     loc1=loc1.lower()
+    session_state.loc1 = loc1
     if loc1=="None":
         pass
     else:
@@ -131,8 +132,7 @@ if page=='City':
             city_page(loc1)
 
 if page=='Suburbs':
-    city = ["Nagpur","Hyderabad","Gurgaon","Pune","Delhi","Chennai","Bangalore","Ahmedabad","Asansol","Mumbai","Jaipur","Kolkata"]
-    loc1 = st.selectbox("Select your city:", ["None"]+ city)
+    loc1 = session_state.loc1
     if loc1=="None":
         pass
     elif len(loc1)>2:
