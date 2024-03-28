@@ -64,10 +64,10 @@ def predict_page(suburb):
         prediction, errors = predict_house_price(df, [bhk, size_sq_ft, bath, ready_to_move, under_construction])
         if prediction >= 10000000:
             price_in_crore = prediction / 10000000
-            price=price_in_crore+" Cr"
+            price=str(price_in_crore)+" Cr"
         else:
             price_in_lakh = prediction/ 100000
-            price=price_in_lakh+" Lakh"
+            price=str(price_in_lakh)+" Lakh"
         st.write(f"Predicted Value: {price}")
         scaled_prediction = prediction / max_value  # Scale prediction to range [0.0, 1.0]
         progress_bar = st.progress(scaled_prediction)
