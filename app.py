@@ -135,6 +135,7 @@ if page=='City':
             city_page(loc1)
 
 if page=='Suburbs':
+    loc1 = st.session_state.loc1
     if loc1=="None":
         pass
     elif len(loc1)>2:
