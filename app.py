@@ -88,20 +88,20 @@ if page=='City':
     loc1 = st.selectbox("Select your city:", ["None"]+ city)
     if loc1=="None":
         pass
-   else:
-        session_state.loc1 = loc1
-        coordinates = get_city_coordinates(loc1)
-        if coordinates:
-            latitude, longitude = coordinates
-            print(f"The coordinates of {loc1} are: Latitude {latitude}, Longitude {longitude}")
-        else:
-            print(f"Coordinates for {loc1} not found")
-        city_coordinates = (latitude,longitude)  # Example: London coordinates
-        m = folium.Map(location=city_coordinates, zoom_start=12)
-        marker_coordinates = (latitude, longitude)  # Example: London coordinates
-        folium.Marker(marker_coordinates, popup='City Center').add_to(m)
-        folium_static(m)
-        city_page(loc1)
+    else:
+            session_state.loc1 = loc1
+            coordinates = get_city_coordinates(loc1)
+            if coordinates:
+                latitude, longitude = coordinates
+                print(f"The coordinates of {loc1} are: Latitude {latitude}, Longitude {longitude}")
+            else:
+                print(f"Coordinates for {loc1} not found")
+            city_coordinates = (latitude,longitude)  # Example: London coordinates
+            m = folium.Map(location=city_coordinates, zoom_start=12)
+            marker_coordinates = (latitude, longitude)  # Example: London coordinates
+            folium.Marker(marker_coordinates, popup='City Center').add_to(m)
+            folium_static(m)
+            city_page(loc1)
 
 if page=='Suburbs':
     loc1 = session_state.loc1
