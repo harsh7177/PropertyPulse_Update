@@ -62,7 +62,7 @@ def predict_page(suburb):
         # Perform prediction or any other action here
         st.success("Inputs submitted successfully!")
         prediction, errors = predict_house_price(df, [bhk, size_sq_ft, bath, ready_to_move, under_construction])
-        if price_in_rupees >= 10000000:
+        if prediction >= 10000000:
             price_in_crore = prediction / 10000000
             price=price_in_crore+" Cr"
         else:
