@@ -102,7 +102,7 @@ if page=='City':
             marker_coordinates = (latitude, longitude)  # Example: London coordinates
             folium.Marker(marker_coordinates, popup='City Center').add_to(m)
             folium_static(m)
-            city_page(loc1)
+            city_page(loc1.lower())
 
 if page=='Suburbs':
     loc1 = session_state.loc1
