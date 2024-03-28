@@ -1,14 +1,15 @@
 
 import mysql.connector
 import pandas as pd
+import streamlit as st
 def conn_detail():
     try:
         # Connect to MySQL database
         conn = mysql.connector.connect(
-        host="cities.c58gyweuqusa.us-east-1.rds.amazonaws.com",
+        host=st.secrets['cities_details_host'],
         user="admin",
-        password="harshkandari",
-        database="cities"
+        password=st.secrets['cities_password'],
+        database=st.secrets['database']
     )
     
         cursor = conn.cursor()
