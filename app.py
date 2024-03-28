@@ -112,7 +112,7 @@ if page=='City':
     else:
         st.session_state.loc1 = loc1
     if loc1=="None":
-        pass
+        st.info("Please select the City")
     else:
         loc1=loc1.lower()
 
