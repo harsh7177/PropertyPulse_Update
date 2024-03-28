@@ -117,9 +117,7 @@ if page=='City':
         loc1=loc1.lower()
 
         try:
-            if loc1=='None':
-                pass
-            else:
+            if loc1:
                 coordinates = get_city_coordinates(loc1)
                 if coordinates:
                     latitude, longitude = coordinates
