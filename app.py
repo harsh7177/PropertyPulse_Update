@@ -83,9 +83,13 @@ def get_city_coordinates(city_name):
 
 
 if page=='City':
-    loc1 = st.text_input("Enter your city:- ")
-    loc1=loc1.lower()
-    if loc1:
+    city_set = set([word.split('_')[0].capitalize() for word in href_tables()])
+    city = list(city_set) 
+    loc1 = st.selectbox("Select your city:", ["None"]+ city)
+    if loc1=="None":
+        pass
+   else:
+       session_state.loc1 = loc1
         coordinates = get_city_coordinates(loc1)
         if coordinates:
             latitude, longitude = coordinates
@@ -100,13 +104,8 @@ if page=='City':
         city_page(loc1)
 
 if page=='Suburbs':
-    city_set = set([word.split('_')[0].capitalize() for word in href_tables()])
-    city = list(city_set) 
-    loc1 = st.selectbox("Select your city:", ["None"]+ city)
-    if loc1=="None":
-        pass
-    else:
-        loc1=loc1.lower()
-        suburbs_page(loc1)
+    loc1 = session_state.loc1
+    loc1=loc1.lower()
+    suburbs_page(loc1)
 elif page=='About Application':
     about_page()
