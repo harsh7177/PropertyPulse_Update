@@ -1,11 +1,12 @@
 import streamlit as st
+from streamlit import session_state
 from pages import city_page,suburbs_page,about_page
-import matplotlib.pyplot as plt
+from predict import predict_page
 from sql_href import href_tables
+import matplotlib.pyplot as plt
 from geopy.geocoders import Nominatim
 import folium
 import base64
-from streamlit import session_state 
 import plotly.express as px
 from streamlit_folium import folium_static
 
@@ -50,7 +51,7 @@ st.markdown("<br><br><br>", unsafe_allow_html=True)
 
 
 
-page = st.sidebar.selectbox("Reviews Or Query Reviews or About", ("City", "Suburbs","About Application"))
+page = st.sidebar.selectbox("Reviews Or Query Reviews or About", ("City", "Suburbs","Predict","About Application"))
 
 sidebar_style = """
     background-color: #f0f2f6;
@@ -59,19 +60,38 @@ sidebar_style = """
     box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
     color: black; /* Set text color to black */
 """
+sidebar_style = "background-color: #f0f2f6; padding: 20px; border-radius: 10px;"
 
-# Add a box around the sidebar content with black text
-st.sidebar.markdown(f"""
-    <div style="{sidebar_style}">
-        <h3 style="color: black;">Welcome to PropertyPulse</h3>
-        <p>This is a Streamlit based application.</p>
-        <p>Developed an REST API on AWS LAMBDA for the web scrapping of the RealEstate data</p>
-        <p>All data scrapped from Makaan.com</p>
-        <br>
-        <p style='text-align:right'> By:- Harsh Kandari</p>
-        
- 
-""", unsafe_allow_html=True)
+instructions_html = """
+<h4 style='color: black; font-family: Arial, sans-serif;'>Step 1: Explore City</h4>
+<ol>
+    <li style='color: blue; font-weight: bold;'>Select a city from the dropdown menu or enter any city from INDIA.</li>
+    <li style='color: blue; font-weight: bold;'>Click the "Explore" button to proceed.</li>
+</ol>
+
+<h4 style='color: black; font-family: Arial, sans-serif;'>Step 2: Explore Suburb</h4>
+<ol>
+    <li style='color: blue; font-weight: bold;'>Choose a suburb from the list or use the search bar to find a specific suburb.</li>
+    <li style='color: blue; font-weight: bold;'>Click the "Explore" button to view details about the selected suburb.</li>
+</ol>
+
+<h4 style='color: black; font-family: Arial, sans-serif;'>Step 3: Predict</h4>
+<ol>
+    <li style='color: black; font-weight: bold;'>Fill in the details below to predict the price of a house:</li>
+    <ul>
+        <li style='color: blue; font-weight: bold;'>Enter the number of bedrooms.</li>
+        <li style='color: blue; font-weight: bold;'>Provide the size of the property (in square feet).</li>
+        <li style='color: blue; font-weight: bold;'>Specify the number of bathrooms.</li>
+        <li style='color: blue; font-weight: bold;'>Select whether the property is ready to move in or under construction.</li>
+    </ul>
+    <li style='color: blue; font-weight: bold;'>Click the "Predict" button to see the predicted price.</li>
+</ol>
+
+<p style='text-align:right; color: red; font-family: Arial, sans-serif;'>By:- Harsh Kandari</p>
+"""
+st.sidebar.markdown(instructions_html, unsafe_allow_html=True)
+
+
 @st.cache_data
 def get_city_coordinates(city_name):
     geolocator = Nominatim(user_agent="your_app_name")
@@ -87,10 +107,12 @@ if page=='City':
     city_set = set([word.split('_')[0].capitalize() for word in href_tables()])
     city = list(city_set) 
     loc1 = st.selectbox("Select your city:", ["None"]+ city)
+    session_state.loc1 = loc1
     if loc1=="None":
         pass
     else:
-            session_state.loc1 = loc1
+        loc1=loc1.lower()
+        if loc1:
             coordinates = get_city_coordinates(loc1)
             if coordinates:
                 latitude, longitude = coordinates
@@ -102,11 +124,14 @@ if page=='City':
             marker_coordinates = (latitude, longitude)  # Example: London coordinates
             folium.Marker(marker_coordinates, popup='City Center').add_to(m)
             folium_static(m)
-            city_page(loc1.lower())
+            city_page(loc1)
 
 if page=='Suburbs':
     loc1 = session_state.loc1
     loc1=loc1.lower()
     suburbs_page(loc1)
+if page=="Predict":
+    suburb=session_state.suburb
+    predict_page(suburb)
 elif page=='About Application':
     about_page()
