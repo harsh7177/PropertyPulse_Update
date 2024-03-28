@@ -135,10 +135,10 @@ if page=='City':
             city_page(loc1)
 
 if page=='Suburbs':
-    loc1 = st.session_state.loc1
-    if loc1=="None":
-        pass
-    elif len(loc1)>2:
+    if 'loc1' not in st.session_state:
+        st.session_state.loc1 = None
+    else:
+        loc1 = st.session_state.loc1
         suburbs_page(loc1)
 if page=="Predict":
     suburb=session_state.suburb
