@@ -141,7 +141,10 @@ if page=='Suburbs':
         loc1 = st.session_state.loc1
         suburbs_page(loc1)
 if page=="Predict":
-    suburb=session_state.suburb
-    predict_page(suburb)
+    try:
+        suburb=session_state.suburb
+        predict_page(suburb)
+    except:
+        st.info("Please try for different Suburb/Area with more properties listed")
 elif page=='About Application':
     about_page()
