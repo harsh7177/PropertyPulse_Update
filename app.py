@@ -110,7 +110,7 @@ if page=='City':
         pass
     else:
         loc1=loc1.lower()
-        st.session_state=loc1
+
         try:
             if loc1:
                 coordinates = get_city_coordinates(loc1)
@@ -130,8 +130,7 @@ if page=='City':
             city_page(loc1)
 
 if page=='Suburbs':
-    loc1 = session_state.loc1
-    loc1=loc1.lower()
+
     suburbs_page(loc1)
 if page=="Predict":
     suburb=session_state.suburb
