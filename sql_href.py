@@ -5,10 +5,10 @@ def conn_href():
     try:
         # Connect to MySQL database
         conn = mysql.connector.connect(
-        host="cityhref.c58gyweuqusa.us-east-1.rds.amazonaws.com",
-        user="admin",
-        password="harshkandari",
-        database="cityhref"
+        host=st.secrets['host_href'],
+        user=st.secrets['user_href'],
+        password=st.secrets['password_href'],
+        database=st.secrets['database_href']
     )
     
         cursor = conn.cursor()
