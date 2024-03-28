@@ -5,6 +5,7 @@ from sql_href import href_tables
 from geopy.geocoders import Nominatim
 import folium
 import base64
+from streamlit import session_state 
 import plotly.express as px
 from streamlit_folium import folium_static
 
