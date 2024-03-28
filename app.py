@@ -130,7 +130,7 @@ if page=='City':
             city_page(loc1)
 
 if page=='Suburbs':
-
+    loc1 = st.selectbox("Select your city:", ["None"]+ city)
     suburbs_page(loc1)
 if page=="Predict":
     suburb=session_state.suburb
