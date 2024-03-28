@@ -116,18 +116,22 @@ if page=='City':
         pass
     else:
         loc1=loc1.lower()
-        if loc1:
-            coordinates = get_city_coordinates(loc1)
-            if coordinates:
-                latitude, longitude = coordinates
-                print(f"The coordinates of {loc1} are: Latitude {latitude}, Longitude {longitude}")
-            else:
-                print(f"Coordinates for {loc1} not found")
-            city_coordinates = (latitude,longitude)  # Example: London coordinates
-            m = folium.Map(location=city_coordinates, zoom_start=12)
-            marker_coordinates = (latitude, longitude)  # Example: London coordinates
-            folium.Marker(marker_coordinates, popup='City Center').add_to(m)
-            folium_static(m)
+        try:
+            if loc1:
+                coordinates = get_city_coordinates(loc1)
+                if coordinates:
+                    latitude, longitude = coordinates
+                    print(f"The coordinates of {loc1} are: Latitude {latitude}, Longitude {longitude}")
+                else:
+                    print(f"Coordinates for {loc1} not found")
+                city_coordinates = (latitude,longitude)  # Example: London coordinates
+                m = folium.Map(location=city_coordinates, zoom_start=12)
+                marker_coordinates = (latitude, longitude)  # Example: London coordinates
+                folium.Marker(marker_coordinates, popup='City Center').add_to(m)
+                folium_static(m)
+                city_page(loc1)
+        except:
+            st.info("Not able to find coordinates of city")
             city_page(loc1)
 
 if page=='Suburbs':
