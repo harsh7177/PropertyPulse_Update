@@ -1,6 +1,7 @@
 import streamlit as st
 from pages import city_page,suburbs_page,about_page
 import matplotlib.pyplot as plt
+from sql_href import href_tables
 from geopy.geocoders import Nominatim
 import folium
 import base64
@@ -99,8 +100,13 @@ if page=='City':
         city_page(loc1)
 
 if page=='Suburbs':
-    loc1= st.text_input("Enter your city:- ")
-    loc1=loc1.lower()
-    suburbs_page(loc1)
+    city_set = set([word.split('_')[0].capitalize() for word in href_tables()])
+    city = list(city_set) 
+    loc1 = st.selectbox("Select your city:", ["None"]+ city)
+    if loc1=="None":
+        pass
+    else:
+        loc1=loc1.lower()
+        suburbs_page(loc1)
 elif page=='About Application':
     about_page()
