@@ -89,7 +89,7 @@ if page=='City':
     if loc1=="None":
         pass
    else:
-       session_state.loc1 = loc1
+        session_state.loc1 = loc1
         coordinates = get_city_coordinates(loc1)
         if coordinates:
             latitude, longitude = coordinates
