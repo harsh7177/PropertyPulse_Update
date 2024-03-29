@@ -66,7 +66,7 @@ def predict_page(suburb):
             price_in_crore =round( prediction / 10000000,2)
             price=str(price_in_crore)+" Cr"
         else:
-            price_in_lakh = round( prediction / 10000000,2)
+            price_in_lakh = round( prediction / 100000,2)
             price=str(price_in_lakh)+" Lakh"
         st.balloons()
         st.title(f"Predicted Value: {price}")
